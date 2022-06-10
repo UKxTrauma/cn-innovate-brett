@@ -1,0 +1,21 @@
+body {
+    color: red;
+}
+
+@media (orientation: portrait) {
+    .title{
+        color: yellow;
+        background-color: black;
+        text-align: center;
+        padding: 5%;
+    }
+}
+
+@media (orientation: landscape) {
+    .subtitle{
+        color: green;
+        background-color: orange;
+        text-align: center;
+        padding: 5%;
+    }
+}
