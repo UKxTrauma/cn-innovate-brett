@@ -1,10 +1,14 @@
+body {
+    color: red;
+}
+
 .mobile, .desktop {
     display: none;
 }
 
 @media (orientation: portrait) {
-    .title{
-        color: yellow;
+    body{
+        color: rgb(112, 220, 247);
         background-color: black;
         text-align: center;
         padding: 5%;
@@ -15,9 +19,9 @@
 }
 
 @media (orientation: landscape) {
-    .subtitle{
-        color: green;
-        background-color: orange;
+    body{
+        color: rgb(0, 0, 0);
+        background-color: rgb(112, 220, 247);
         text-align: center;
         padding: 5%;
     }
