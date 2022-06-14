@@ -1,5 +1,5 @@
-import pygame, sys, random
-
+import pygame, sys, random, math
+from pygame.locals import *
 
 ###general setup###
 pygame.init()
@@ -12,9 +12,9 @@ screen_height = 1080
 #screen size
 screen = pygame.display.set_mode((screen_width, screen_height))
 #screen creation
+table = pygame.display.set_mode((1920, 1080))
 #------------------------------
-
-pygame.display.set_caption("PONG")
+pygame.display.set_caption("Air Hockey")
 #------------------------------
 
 ###Game rectangles###
@@ -31,14 +31,17 @@ player = pygame.Rect(screen_width - 150, screen_height/2 - 50, 100, 100)
 opponent = pygame.Rect(50, screen_height/2 - 50, 100, 100)
 #same height as player#
 #positioned left of screen#
-l_goal = pygame.Rect(0, screen_height/2 - 70, 10, 250)
-r_goal = pygame.Rect(screen_width -10, screen_height/2 - 125, 10, 250)
+l_goal = pygame.Rect(0, screen_height/2 - 200, 10, 400)
+r_goal = pygame.Rect(screen_width -10, screen_height/2 - 200, 10, 400)
+top_boost = pygame.Rect(screen_width/2 - 620, 0, 1240, 10)
+bottom_boost = pygame.Rect(screen_width/2 - 620, screen_height -10, 1240, 10)
 
 ###Colours###
-bg_color = pygame.Color('grey12')
-light_grey = (200, 200, 200)
+white = ('white')
 orange = pygame.Color('orange')
-Pi = 3.14
+blue = pygame.Color('blue')
+black = pygame.Color('black')
+red = pygame.Color('red')
 
 ###animation###
 puck_speed_x = 7 * random.choice((1, -1))
@@ -56,11 +59,11 @@ def puck_animation():
     #if the puck hits the top or the bottom, reverse horizontal path#
     if puck.left <= 0 or puck.right >= screen_width:
         puck_speed_x *= -1
-    #reverse horizontal speed if the puck collides with player or opponent
     if puck.colliderect(l_goal):
         puck_restart()
     if puck.colliderect(r_goal):
         puck_restart()
+    #reverse horizontal speed if the puck collides with player or opponent
     if puck.colliderect(player) or puck.colliderect(opponent):
         puck_speed_x *= -1
 
@@ -111,18 +114,26 @@ while True:
     player_animation()
     opponent_animation()
     ###Visuals###        
-    screen.fill(bg_color)
-    pygame.draw.rect(screen, light_grey, r_goal)
-    pygame.draw.rect(screen, light_grey, l_goal) 
-    pygame.draw.ellipse(screen, light_grey, puck)
-    pygame.draw.ellipse(screen, light_grey, player)
-    pygame.draw.ellipse(screen, light_grey, opponent)
+    screen.fill(black)
+    pygame.draw.rect(table, black, pygame.Rect(30, 30, 60, 60), 2, 3)
+    table.fill(white)
+    pygame.draw.aaline(screen, black, (screen_width/2,0), (screen_width/2,screen_height))
+    pygame.draw.arc(screen, black, (0, 0, 680, 680), math.pi/2, math.pi, width=10)
+    pygame.draw.arc(screen, black, (0, 400, 680, 680), -math.pi, -math.pi/2, width=10)
+    pygame.draw.arc(screen, black, (1240, 0, 680, 680), math.pi*2, math.pi/2, width=10)
+    pygame.draw.arc(screen, black, (1240, 400, 680, 680), -math.pi/2, -math.pi*2, width=10)
+    pygame.draw.rect(screen, red, top_boost)
+    pygame.draw.rect(screen, red, bottom_boost)
+    pygame.draw.rect(screen, blue, r_goal)
+    pygame.draw.rect(screen, orange, l_goal) 
+    pygame.draw.ellipse(screen, black, puck)
+    pygame.draw.ellipse(screen, blue, player)
+    pygame.draw.ellipse(screen, orange, opponent)
     #ellipse uses it's own frame to draw an ellipse#
     #because all sides are same size, ellipse becomes a circle#
 
     #draw line down centre of screen, aaline stands for anti-alias line#
-    pygame.draw.aaline(screen, light_grey, (screen_width/2,0), (screen_width/2,screen_height))
-    pygame.draw.arc(screen, orange, (50, 415, 50, 50), Pi/2, Pi, 10)
+    # pygame.draw.rect(screen, color = pygame.Color('white'), rect = (1920, 1080, -1920, -1080), width = 30, border_radius = 300)
     #(display, color, start point, end point)#
     #start point is 1/2 screen width, with 0 being middle of top window#
     #end point is 1/2 screen width and screen height, (middle of bottom window)#
