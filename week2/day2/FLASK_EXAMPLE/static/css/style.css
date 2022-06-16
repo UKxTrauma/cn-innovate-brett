@@ -6,6 +6,11 @@ h1 {
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
-.task-box {
+.hidden {
     display: none;
+}
+
+.dark-mode {
+    background-color: black;
+    color: aqua;
 }

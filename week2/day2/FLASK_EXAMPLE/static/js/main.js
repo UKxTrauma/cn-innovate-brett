@@ -18,11 +18,18 @@ function reallyGodFunction (num1, num2) {
 };
 
 function taskHider () {
-    let element = document.getElementId("task-box")
-    element.classList.toggle("hidden")
-}
+    let element = document.getElementById("task-box");
+    element.classList.toggle("hidden");
+    console.log("dsfasgdqg");
+};
 
 function darkMode () {
-    let element = document.getElementsByTagName("body")
-    element.classList.toggle("dark-mode")
-}
+    let element = document.getElementById("base-body");
+    element.classList.toggle("dark-mode");
+};
+
+const date = Date()
+
+function displayDate() {
+    document.getElementById("date").innerHTML = Date();
+};
